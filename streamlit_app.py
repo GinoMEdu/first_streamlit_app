@@ -38,8 +38,8 @@ try:
    if not fruit_choice:
         streamlit.error("Please select a fruit to get information.")
    else:
-        back_from_funtion = get_fruityvice_data(this_fruit_choice)
-        streamlit.dataframe(back_from_funtion) 
+        back_from_function = get_fruityvice_data(fruit_choice)
+        streamlit.dataframe(back_from_function) 
         
         #fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
         #fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
@@ -59,20 +59,18 @@ try:
 #streamlit.dataframe(fruityvice_normalized)
 # don't run anything past here while we troubleshoot
 
-#streamlit.stop()
+streamlit.stop()
 
-#my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-#my_cur = my_cnx.cursor()
-#my_cur.execute("select * from pc_rivery_db.public.fruit_load_list")
-#my_data_rows = my_cur.fetchall()
-#streamlit.text("The fruit load list contains:")
-#streamlit.dataframe(my_data_rows)
-#
-##Allow the end user to add a fruit to the list
-#add_my_fruit = streamlit.text_input('What fruit would you like to add?','Jackfruit')
-#streamlit.write('Thanks for adding ', add_my_fruit)
-#
-##This will not work correctly, but just ho with it for now
-#my_cur.execute("insert into pc_rivery_db.public.fruit_load_list values ('from streamlit')")
+my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+my_cur = my_cnx.cursor()
+my_cur.execute("select * from pc_rivery_db.public.fruit_load_list")
+my_data_rows = my_cur.fetchall()
+streamlit.text("The fruit load list contains:")
+streamlit.dataframe(my_data_rows)
 
+#Allow the end user to add a fruit to the list
+add_my_fruit = streamlit.text_input('What fruit would you like to add?','Jackfruit')
+streamlit.write('Thanks for adding ', add_my_fruit)
 
+#This will not work correctly, but just ho with it for now
+my_cur.execute("insert into pc_rivery_db.public.fruit_load_list values ('from streamlit')")
